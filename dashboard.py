@@ -6,7 +6,7 @@ import plotly.express as px
 from datetime import datetime
 import streamlit as st
 
-# Load or define your day_df here (replace 'your_data.csv' with your actual data file)
+# Load or define data
 day_df = pd.read_csv("all_data.csv")
 
 def create_user_weather(df):
@@ -24,14 +24,10 @@ def create_user_year(df):
     }).reset_index()
     return monthly_counts
 
-def create_user_season(df):
-    filtered_data_2012 = df[df["year"] == 2012]  # Replace '1' with '2012'
-    return filtered_data_2012
-
 def main():
     st.header('Projek Analisis Data: Bike Sharing')
     st.subheader('Course: Analysis Data with Python')
-    st.subheader('1. Pengaruh cuaca terhadap jumlah pengguna sepeda')
+    st.subheader('Pengaruh cuaca terhadap jumlah pengguna sepeda')
     user_weather = create_user_weather(day_df)
     
     plt.figure(figsize=(8,6))
@@ -63,14 +59,6 @@ def main():
     plt.legend(title="Tahun", loc="upper right")
     plt.tight_layout()
     st.pyplot(plt.gcf())  # Pass the current figure to st.pyplot()
-
-    st.subheader('Pengaruh musim terhadap Jumlah Pengguna Sewa Sepeda baik Casual dan registered di tahun 2012')
-    user_season = create_user_season(day_df)
-    fig = px.bar(user_season, x="season", y="count", title="Pengaruh Musim terhadap Jumlah Pengguna Sewa Sepeda pada tahun 2012")
-    fig.update_xaxes(title="musim")
-    fig.update_yaxes(title="Jumlah Pengguna Sewa Sepeda (cnt)")
-
-    st.plotly_chart(fig)
 
     st.subheader('Pengaruh suhu atau temperatur serta kelembapan terhadap pengguna sepeda baik casual dan registered')
     plt.figure(figsize=(10, 6))
